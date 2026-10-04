@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Öğretmen · XX10</title>
+<style>
+:root{--ink:#1F2A33;--gold:#D9A441;--cream:#FBF8F2;--paper:#fff;--acc:#B8532A;--green:#3F6B4A;--navy:#2B4A6F;--mute:#6B6F76;--line:#E7DFD0;--soft:#F4EFE5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:600;line-height:1.2;margin:0}
+header{background:var(--ink);color:var(--cream);padding:14px 20px}
+header .ic{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header .kick{font:600 11px/1 system-ui;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+header h1{font-size:22px;margin-top:4px}
+header .sag{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+main{max-width:1280px;margin:0 auto;padding:20px 16px 80px}
+.kart{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+.kt{font:600 11px/1 system-ui;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+.mute{color:var(--mute)}.kucuk{font-size:13px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:9px;padding:9px 15px;font:600 13.5px system-ui;cursor:pointer;background:var(--ink);color:#fff}
+.btn.ikincil{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+header .btn.ikincil{background:transparent;color:var(--cream);border-color:rgba(255,255,255,.4)}
+.btn.altin{background:var(--gold);color:var(--ink)}
+.btn.yesil{background:var(--green)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.satir{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+textarea,input[type=text],input[type=password],select{width:100%;font:inherit;border:1px solid #D9D0BF;border-radius:9px;padding:8px 10px;background:#FFFEFB;color:var(--ink)}
+label.alan{display:block;margin:14px 0 5px;font-weight:600;font-size:14px}
+table{width:100%;border-collapse:collapse}
+.genel th,.genel td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.genel th{font:600 10.5px system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.genel tr.tik{cursor:pointer}.genel tr.tik:hover{background:var(--soft)}
+.hucre{width:30px;height:22px;border-radius:5px;display:inline-block;border:1px dashed #CFC6B5}
+.d0{background:#F1D9CB;border:0}.d1{background:#EBD08F;border:0}.d2{background:#8FB79A;border:0}
+.rozet{display:inline-block;font:600 11.5px system-ui;border-radius:6px;padding:3px 8px}
+.r-bekliyor{background:#FFF1E6;color:var(--acc)}.r-tamam{background:#EAF3EC;color:var(--green)}.r-yok{background:#EEE;color:#777}
+.iki{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.metin h4{margin:16px 0 4px;font-size:13.5px}
+.metin p{margin:0;white-space:pre-wrap;background:var(--soft);border-radius:8px;padding:8px 10px;font-size:14.5px}
+.metin p.bos{color:#A33;font-style:italic;background:#FBEDEA}
+.boy{border-top:1px solid var(--line);padding:10px 0}
+.boy .ust{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.sec{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.sec button{border:1.5px solid #D9D0BF;background:#fff;border-radius:999px;padding:5px 11px;font:500 12.5px system-ui;cursor:pointer}
+.sec button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.oz{font-size:12px;color:var(--mute)}
+.uyari{background:#FFF6E3;border:1px solid #EBCB8B;border-radius:9px;padding:10px 12px;font-size:13.5px}
+.basari{background:#EAF3EC;border:1px solid #A9C9B0;border-radius:9px;padding:10px 12px;font-size:13.5px}
+.yapiskan{position:sticky;top:12px}
+.gizli{display:none!important}
+.durum{font-size:13px;color:var(--mute);min-height:18px}
+@media (max-width:900px){.iki{grid-template-columns:1fr}.yapiskan{position:static}}
+</style>
+</head>
+<body>
+<header><div class="ic">
+  <div><div class="kick">XX10 · Öğretim elemanı</div><h1>Tasarım Dosyaları</h1></div>
+  <div class="sag gizli" id="ust">
+    <button class="btn ikincil" id="genelBtn">Sınıf</button>
+    <button class="btn ikincil" id="yenileBtn">Yenile</button>
+    <button class="btn ikincil" id="ayarBtn">Ayarlar</button>
+  </div>
+</div></header>
+<main id="ana"></main>
+<script src="akilli/akilli_ayar.js"></script>
+<script>
+(function () {
+'use strict';
+var A = window.XX10_AKILLI, KEY = 'xx10_ogretmen_v1';
+var Y = yukle(), V = null, gorunum = {ad: 'genel'}, kuyruk = false;
+function yukle() { var d = {sifre: '', anahtar: '', model: '', taslak: {}}; try { var x = JSON.parse(localStorage.getItem(KEY)); if (x) return Object.assign(d, x); } catch (e) {} return d; }
+function kaydet() { try { localStorage.setItem(KEY, JSON.stringify(Y)); } catch (e) {} }
+function $(q) { return document.querySelector(q); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]; }); }
+function tarih(t) { var d = new Date(t); return d.toLocaleDateString('tr-TR', {day: 'numeric', month: 'long'}) + ' ' + d.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'}); }
+function api(g) {
+  if (!A.sunucu) return Promise.reject(new Error('Sunucu adresi akilli_ayar.js dosyasına henüz yazılmadı.'));
+  g.sifre = Y.sifre;
+  return fetch(A.sunucu, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(g)})
+    .then(function (r) { return r.json(); }, function () { throw new Error('Sunucuya ulaşılamadı.'); })
+    .then(function (j) { if (!j.ok) throw new Error(j.hata || 'Hata'); return j; });
+}
+function sonTeslim(no, h) { var l = V.teslimler.filter(function (t) { return t.no === no && t.hafta === h; }); return l.length ? l[l.length - 1] : null; }
+function sonGb(no, h) { var l = V.gb.filter(function (g) { return g.no === no && g.hafta === h; }); return l.length ? l[l.length - 1] : null; }
+function sonSeviye(no) { var m = {}; V.gb.filter(function (g) { return g.no === no; }).forEach(function (g) { Object.keys(g.seviyeler || {}).forEach(function (k) { if (g.seviyeler[k] != null) m[k] = g.seviyeler[k]; }); }); return m; }
+function bekliyor(no, h) { var t = sonTeslim(no, h), g = sonGb(no, h); return !!t && (!g || g.teslimZamani < t.zaman); }
+function tk(t) { return t.no + '_' + t.hafta + '_' + t.zaman; }
+
+/* ---------- giriş ---------- */
+function girisCiz(hata) {
+  $('#ust').classList.add('gizli');
+  $('#ana').innerHTML = '<div class="kart" style="max-width:420px;margin:30px auto"><div class="kt">Giriş</div><label class="alan" for="sifre">Öğretmen şifresi</label><input type="password" id="sifre">' +
+    (hata ? '<div class="uyari" style="margin-top:10px">' + esc(hata) + '</div>' : '') + '<div style="margin-top:14px"><button class="btn" id="gir">Giriş</button></div></div>';
+  $('#sifre').onkeydown = function (e) { if (e.key === 'Enter') $('#gir').click(); };
+  $('#gir').onclick = function () { Y.sifre = $('#sifre').value; getir(true); };
+}
+function getir(ilk) {
+  $('#ana').innerHTML = '<p class="mute">Yükleniyor…</p>';
+  api({islem: 'ogretmen'}).then(function (j) {
+    kaydet(); V = j; V.teslimler.sort(function (a, b) { return a.zaman - b.zaman; }); V.gb.sort(function (a, b) { return a.zaman - b.zaman; });
+    $('#ust').classList.remove('gizli'); ciz(); taslaklariHazirla();
+  }).catch(function (e) { if (ilk || /şifre/i.test(e.message)) { Y.sifre = ''; kaydet(); girisCiz(e.message); } else $('#ana').innerHTML = '<div class="uyari">' + esc(e.message) + '</div>'; });
+}
+
+/* ---------- taslaklar kendiliğinden ---------- */
+function taslaklariHazirla() {
+  if (!Y.anahtar || !Y.model || kuyruk) return;
+  var bek = []; V.ogrenciler.forEach(function (o) { var t = sonTeslim(o.no, 1); if (t && bekliyor(o.no, 1) && !Y.taslak[tk(t)]) bek.push(t); });
+  if (!bek.length) return; kuyruk = true;
+  (function sira(i) {
+    if (i >= bek.length) { kuyruk = false; if (gorunum.ad === 'genel') ciz(); return; }
+    var t = bek[i]; Y.taslak[tk(t)] = {durum: 'hazirlaniyor'}; if (gorunum.ad === 'genel') ciz();
+    claude(istem(t)).then(function (txt) { var d = bosTaslak(); uygula(d, ayikla(txt), A.haftalar[t.hafta], 'claude'); Y.taslak[tk(t)] = d; })
+      .catch(function (e) { Y.taslak[tk(t)] = {durum: 'hata', hata: e.message}; })
+      .then(function () { kaydet(); if (gorunum.ad === 'genel') ciz(); sira(i + 1); });
+  })(0);
+}
+
+/* ---------- sınıf ---------- */
+function genelCiz() {
+  var h = 1, H = A.haftalar[h], ogr = V.ogrenciler.slice().sort(function (a, b) { return a.ad.localeCompare(b.ad, 'tr'); });
+  var bekleyen = ogr.filter(function (o) { return bekliyor(o.no, h); }).length;
+  $('#ana').innerHTML = '<div class="kart"><div class="kt">Hafta 1 · ' + esc(H.uy) + ' · ' + esc(H.baslik) + '</div>' +
+    (ogr.length ? '<p class="kucuk mute">' + (bekleyen ? bekleyen + ' yaprak geri bildiriminizi bekliyor. Satıra tıklayın.' : 'Bekleyen yaprak yok.') + (Y.anahtar ? '' : ' Taslakların kendiliğinden hazırlanması için Ayarlar\'dan Claude anahtarını girin.') + '</p>' +
+      '<table class="genel"><tr><th>Öğrenci</th><th>Durum</th>' + A.boyutlar.map(function (b) { return '<th title="' + esc(b.ad) + '">' + b.id + '</th>'; }).join('') + '</tr>' +
+      ogr.map(function (o) {
+        var t = sonTeslim(o.no, h), s = sonSeviye(o.no), d = t ? Y.taslak[tk(t)] : null, dur;
+        if (!t) dur = '<span class="rozet r-yok">Henüz göndermedi</span>';
+        else if (!bekliyor(o.no, h)) dur = '<span class="rozet r-tamam">Geri bildirim gönderildi</span>';
+        else if (d && d.durum === 'hazirlaniyor') dur = '<span class="rozet r-bekliyor">Taslak hazırlanıyor…</span>';
+        else if (d && d.metin) dur = '<span class="rozet r-bekliyor">Taslak hazır, onayınızı bekliyor</span>';
+        else dur = '<span class="rozet r-bekliyor">Geri bildirim bekliyor</span>';
+        return '<tr class="' + (t ? 'tik' : '') + '" data-no="' + esc(o.no) + '"><td><b>' + esc(o.ad) + '</b><div class="kucuk mute">' + esc(o.no) + (t ? ' · ' + tarih(t.zaman) : '') + '</div></td><td>' + dur + '</td>' +
+          A.boyutlar.map(function (b) { return '<td><span class="hucre ' + (s[b.id] != null ? 'd' + s[b.id] : '') + '"></span></td>'; }).join('') + '</tr>';
+      }).join('') + '</table><p class="kucuk mute" style="margin-top:10px">Hücreler son onayladığınız düzeyi gösterir: <span class="hucre d0"></span> henüz · <span class="hucre d1"></span> gelişiyor · <span class="hucre d2"></span> yerinde</p>'
+      : '<p>Henüz giriş yapan öğrenci yok. Öğrenciler platformdaki "Tasarım Dosyam" düğmesinden numaraları ve kendi belirledikleri PIN ile girer.</p>') + '</div>';
+  document.querySelectorAll('tr.tik').forEach(function (tr) { tr.onclick = function () { gorunum = {ad: 'inceleme', no: tr.dataset.no, h: 1}; ciz(); }; });
+}
+
+/* ---------- inceleme ---------- */
+function bosTaslak() { var s = {}; A.boyutlar.forEach(function (b) { s[b.id] = null; }); return {seviyeler: s, guclu: [], gelistir: [], soru: '', metin: '', oneriler: [], ozelOneri: '', kaynak: 'el'}; }
+function otomatikOneriler(d, H) { var ids = []; A.boyutlar.forEach(function (b) { if (d.seviyeler[b.id] != null && d.seviyeler[b.id] < 2) (H.oneriler[b.id] || []).slice(0, 1).forEach(function (o) { ids.push(o.id); }); }); return ids; }
+function incelemeCiz() {
+  var no = gorunum.no, h = gorunum.h, t = sonTeslim(no, h), H = A.haftalar[h], o = V.ogrenciler.filter(function (x) { return x.no === no; })[0];
+  if (!t) { gorunum = {ad: 'genel'}; return ciz(); }
+  var k = tk(t); if (!Y.taslak[k] || !Y.taslak[k].seviyeler) Y.taslak[k] = bosTaslak(); var d = Y.taslak[k];
+  var g = sonGb(no, h), gonderildi = g && g.teslimZamani >= t.zaman;
+  if (gonderildi && d.kaynak !== 'duzenleme') { d = Y.taslak[k] = Object.assign(bosTaslak(), {seviyeler: g.seviyeler, guclu: g.guclu, gelistir: g.gelistir, soru: g.soru, metin: g.metin, oneriler: g.oneriler, ozelOneri: g.ozelOneri, kaynak: 'duzenleme'}); }
+  var tumOneri = []; Object.keys(H.oneriler).forEach(function (b) { H.oneriler[b].forEach(function (x) { tumOneri.push({b: b, o: x}); }); });
+  $('#ana').innerHTML =
+    '<div class="satir" style="margin-bottom:14px"><button class="btn ikincil" id="geri">← Sınıf</button><h2 style="font-size:22px">' + esc(o.ad) + ' <span class="mute" style="font-size:15px">' + esc(H.uy) + ' · ' + tarih(t.zaman) + ' · ' + t.kelime + ' sözcük</span></h2></div>' +
+    (gonderildi ? '<div class="basari" style="margin-bottom:14px">Bu yaprağa ' + tarih(g.zaman) + ' tarihinde geri bildirim gönderdiniz. Düzeltip yeniden gönderebilirsiniz.</div>' : '') +
+    '<div class="iki"><div><div class="kart metin"><div class="kt">Öğrencinin yaprağı</div>' +
+      H.alanlar.map(function (f) { var v = ((t.alanlar || {})[f.id] || '').trim(); return '<h4>' + esc(f.bas) + '</h4><p class="' + (v ? '' : 'bos') + '">' + (v ? esc(v) : 'Boş bırakılmış') + '</p>'; }).join('') + '</div>' +
+      '<div class="kart"><div class="kt">Kendini denetle</div>' + H.kontrol.map(function (x, i) { return '<div class="kucuk">' + ((t.kontrol || [])[i] ? '☑' : '☐') + ' ' + esc(x) + '</div>'; }).join('') +
+      (t.kartNotu ? '<div class="kt" style="margin-top:14px">Öğrencinin notu</div><div class="uyari">' + esc(t.kartNotu) + '</div>' : '') + '</div></div>' +
+    '<div class="yapiskan"><div class="kart"><div class="kt">Geri bildirim</div>' +
+      '<div class="durum" id="durum">' + (d.kaynak === 'claude' ? 'Taslağı Claude hazırladı. Okuyun, gerekirse düzeltin, sonra gönderin.' : '') + '</div>' +
+      '<div class="satir">' + (Y.anahtar ? '<button class="btn ikincil" id="taslakBtn">' + (d.metin ? 'Taslağı yeniden üret' : 'Claude ile taslak üret') + '</button>' : '<button class="btn ikincil" id="istemBtn">İstemi kopyala</button><button class="btn ikincil" id="yapistirBtn">Yanıtı yapıştır</button>') + '</div>' +
+      '<textarea id="yapistirAlan" class="gizli" rows="5" placeholder="Claude\'un yanıtını buraya yapıştırın"></textarea>' +
+      A.boyutlar.map(function (b) { var oz = t.oz && t.oz[b.id] != null ? A.duzeyler[t.oz[b.id]].ad : '—';
+        return '<div class="boy"><div class="ust"><b>' + b.id + ' · ' + esc(b.ad) + '</b><span class="oz">Öğrenci: ' + oz + '</span></div><div class="sec" data-b="' + b.id + '">' + A.duzeyler.map(function (x) { return '<button data-d="' + x.k + '" class="' + (d.seviyeler[b.id] === x.k ? 'on' : '') + '">' + esc(x.ad) + '</button>'; }).join('') + '</div></div>'; }).join('') +
+      '<label class="alan">Öğrenciye gidecek metin</label><textarea id="gMetin" rows="7">' + esc(d.metin) + '</textarea>' +
+      '<label class="alan">Güçlü yanlar (her satır bir madde)</label><textarea id="gGuclu" rows="3">' + esc((d.guclu || []).join('\n')) + '</textarea>' +
+      '<label class="alan">Geliştirilecek (her satır bir madde)</label><textarea id="gGelistir" rows="3">' + esc((d.gelistir || []).join('\n')) + '</textarea>' +
+      '<label class="alan">Düşünmesi için bir soru</label><textarea id="gSoru" rows="2">' + esc(d.soru) + '</textarea>' +
+      '<label class="alan">Önerilen okumalar</label>' + tumOneri.map(function (x) { return '<label class="kucuk" style="display:flex;gap:8px;margin:5px 0"><input type="checkbox" data-o="' + x.o.id + '"' + (d.oneriler.indexOf(x.o.id) >= 0 ? ' checked' : '') + '><span><b>' + x.b + '</b> · ' + esc(x.o.ad) + '</span></label>'; }).join('') +
+      '<label class="alan">Kişisel öneri (isteğe bağlı)</label><textarea id="gOzel" rows="2">' + esc(d.ozelOneri) + '</textarea>' +
+      '<div id="gMesaj"></div><div class="satir" style="margin-top:16px"><button class="btn yesil" id="onayBtn">Onayla ve öğrenciye gönder</button></div>' +
+    '</div></div></div>';
+  $('#geri').onclick = function () { gorunum = {ad: 'genel'}; ciz(); };
+  function oku() {
+    d.metin = $('#gMetin').value; d.soru = $('#gSoru').value; d.ozelOneri = $('#gOzel').value;
+    d.guclu = $('#gGuclu').value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+    d.gelistir = $('#gGelistir').value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+    d.oneriler = Array.prototype.slice.call(document.querySelectorAll('[data-o]')).filter(function (c) { return c.checked; }).map(function (c) { return c.dataset.o; });
+    kaydet();
+  }
+  ['#gMetin', '#gSoru', '#gOzel', '#gGuclu', '#gGelistir'].forEach(function (q) { $(q).oninput = oku; });
+  document.querySelectorAll('[data-o]').forEach(function (c) { c.onchange = oku; });
+  document.querySelectorAll('.sec').forEach(function (s) { s.querySelectorAll('button').forEach(function (b) { b.onclick = function () {
+    d.seviyeler[s.dataset.b] = +b.dataset.d; s.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    var oto = otomatikOneriler(d, H); document.querySelectorAll('[data-o]').forEach(function (c) { if (oto.indexOf(c.dataset.o) >= 0) c.checked = true; }); oku(); }; }); });
+  if ($('#istemBtn')) $('#istemBtn').onclick = function () { var p = istem(t); kopyala(p.system + '\n\n' + p.user); $('#durum').textContent = 'İstem kopyalandı. Claude sohbetine yapıştırın, yanıtı "Yanıtı yapıştır" ile getirin.'; };
+  if ($('#yapistirBtn')) $('#yapistirBtn').onclick = function () {
+    var al = $('#yapistirAlan');
+    if (al.classList.contains('gizli')) { al.classList.remove('gizli'); al.focus(); this.textContent = 'Yapıştırılanı uygula'; return; }
+    try { uygula(d, ayikla(al.value), H, 'claude'); kaydet(); incelemeCiz(); } catch (e) { $('#durum').textContent = 'Yanıt okunamadı: ' + e.message; }
+  };
+  if ($('#taslakBtn')) $('#taslakBtn').onclick = function () {
+    var b = this; b.disabled = true; $('#durum').textContent = 'Claude taslağı hazırlıyor (yaklaşık yarım dakika)…';
+    claude(istem(t)).then(function (txt) { uygula(d, ayikla(txt), H, 'claude'); kaydet(); incelemeCiz(); }).catch(function (e) { $('#durum').textContent = 'Taslak üretilemedi: ' + e.message; b.disabled = false; });
+  };
+  $('#onayBtn').onclick = function () {
+    oku(); if (!d.metin.trim()) { alert('Öğrenciye gidecek metin boş.'); return; }
+    var b = this; b.disabled = true; b.textContent = 'Gönderiliyor…';
+    var veri = {hafta: h, uy: H.uy, teslimZamani: t.zaman, seviyeler: d.seviyeler, metin: d.metin.trim(), guclu: d.guclu, gelistir: d.gelistir, soru: d.soru.trim(), oneriler: d.oneriler, ozelOneri: d.ozelOneri.trim(), taslakKaynagi: d.kaynak};
+    api({islem: 'gbKaydet', no: no, veri: veri}).then(function (j) {
+      V.gb.push(Object.assign({no: no, zaman: j.zaman}, veri)); delete Y.taslak[k]; kaydet(); gorunum = {ad: 'genel'}; ciz();
+    }).catch(function (e) { $('#gMesaj').innerHTML = '<div class="uyari">' + esc(e.message) + '</div>'; b.disabled = false; b.textContent = 'Onayla ve öğrenciye gönder'; });
+  };
+}
+function kopyala(s) { if (navigator.clipboard) navigator.clipboard.writeText(s).catch(function () { yedekKopya(s); }); else yedekKopya(s); }
+function yedekKopya(s) { var x = document.createElement('textarea'); x.value = s; document.body.appendChild(x); x.select(); try { document.execCommand('copy'); } catch (e) {} x.remove(); }
+
+/* ---------- dil modeli ---------- */
+function istem(t) {
+  var H = A.haftalar[t.hafta];
+  var system = 'Bir yüksek lisans dersinde (XX10, Yetişkin Eğitiminde Akıllı ve Uyarlanabilir Öğrenme Sistemleri) öğretim elemanına yardımcı oluyorsun. Görevin, öğrencinin haftalık Uygulama Yaprağı için öğretim elemanının okuyup düzelteceği bir geri bildirim TASLAĞI hazırlamak. Kararı öğretim elemanı verir.\n' +
+    'Kurallar:\n- Türkçe, saygılı ve sıcak bir akademik dil kullan; öğrenciye "siz" diye hitap et.\n- Not verme, puan verme, öğrenciyi başkalarıyla karşılaştırma.\n- Öğrencinin yerine yazma ve hazır cevap verme; yönlendirici sorular sor.\n- Her yargıyı öğrencinin metnindeki somut bir ifadeye dayandır; metinde olmayan bir şeyi varsayma. Boş bırakılmış bir bölüm varsa bunu nazikçe belirt.\n- Dış kaynak, yazar ya da yayın uydurma. Yalnızca ders materyaline (alt başlık numaralarıyla, örneğin "1.4") gönderme yap.\n- Düzeyler: 0 = henüz görünmüyor, 1 = gelişiyor, 2 = yerinde. Düzeyi yalnızca metindeki kanıta göre ver.\n' +
+    'Yanıtı YALNIZCA aşağıdaki biçimde tek bir JSON nesnesi olarak ver, başka hiçbir şey yazma:\n{"seviyeler":{' + A.boyutlar.map(function (b) { return '"' + b.id + '":0'; }).join(',') + '},"guclu":["…","…"],"gelistir":["…","…"],"soru":"…","metin":"…","oneriler":["…"]}\n' +
+    '"metin" 120–180 sözcük olsun ve öğrenciye doğrudan gidecek biçimde yazılsın. "guclu" ve "gelistir" ikişer ya da üçer kısa madde içersin. "soru" öğrencinin bir sonraki yaprakta düşünmesi gereken tek bir soru olsun. "oneriler" yalnızca şu kimliklerden seçilsin: ' +
+    Object.keys(H.oneriler).map(function (b) { return H.oneriler[b].map(function (o) { return o.id + ' (' + b + ': ' + o.ad + ')'; }).join(', '); }).join(', ') + '.';
+  var user = 'HAFTA BAĞLAMI: ' + H.baglam + '\n\nDEĞERLENDİRME BOYUTLARI:\n' + A.boyutlar.map(function (b) { return b.id + ' ' + b.ad + ': ' + b.aciklama; }).join('\n') +
+    '\n\nYAPRAK: ' + H.uy + ' · ' + H.baslik + '\n' + H.alanlar.map(function (f) { return '## ' + f.bas + '\n(Yönerge: ' + f.ipucu + ')\n' + (((t.alanlar || {})[f.id] || '').trim() || '[BOŞ]'); }).join('\n\n') +
+    '\n\nÖĞRENCİNİN KENDİ DEĞERLENDİRMESİ: ' + A.boyutlar.map(function (b) { return b.id + '=' + (t.oz && t.oz[b.id] != null ? t.oz[b.id] : '-'); }).join(', ') +
+    (t.kartNotu ? '\nÖĞRENCİNİN KART NOTU: ' + t.kartNotu : '');
+  return {system: system, user: user};
+}
+function ayikla(txt) { var a = txt.indexOf('{'), b = txt.lastIndexOf('}'); if (a < 0 || b < a) throw new Error('JSON bulunamadı'); return JSON.parse(txt.slice(a, b + 1)); }
+function uygula(d, j, H, kaynak) {
+  A.boyutlar.forEach(function (b) { var v = j.seviyeler && j.seviyeler[b.id]; if (v === 0 || v === 1 || v === 2) d.seviyeler[b.id] = v; });
+  d.metin = j.metin || d.metin; d.soru = j.soru || d.soru; d.guclu = j.guclu || d.guclu; d.gelistir = j.gelistir || d.gelistir;
+  var gecerli = {}; Object.keys(H.oneriler).forEach(function (b) { H.oneriler[b].forEach(function (o) { gecerli[o.id] = 1; }); });
+  var on = (j.oneriler || []).filter(function (x) { return gecerli[x]; }); d.oneriler = on.length ? on : otomatikOneriler(d, H); d.kaynak = kaynak;
+}
+function basliklar() { return {'x-api-key': Y.anahtar, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true', 'content-type': 'application/json'}; }
+function claude(p) {
+  return fetch('https://api.anthropic.com/v1/messages', {method: 'POST', headers: basliklar(), body: JSON.stringify({model: Y.model, max_tokens: 2000, system: p.system, messages: [{role: 'user', content: p.user}]})})
+    .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error((j.error && j.error.message) || r.status); return (j.content || []).map(function (c) { return c.text || ''; }).join(''); }); });
+}
+
+/* ---------- ayarlar ---------- */
+function ayarCiz() {
+  $('#ana').innerHTML = '<div class="kart" style="max-width:640px"><div class="kt">Taslakları Claude hazırlasın</div>' +
+    '<p class="kucuk">Anthropic API anahtarı girerseniz, öğrenciler yaprak gönderdiğinde siz paneli açınca taslaklar kendiliğinden hazırlanır. Anahtar yalnızca bu bilgisayarın tarayıcısında saklanır. Taslak üretilirken yaprak metni Anthropic\'e gider; ad ve numara gitmez.</p>' +
+    '<label class="alan">API anahtarı</label><input type="password" id="anahtar" value="' + esc(Y.anahtar || '') + '" placeholder="sk-ant-…">' +
+    '<div class="satir" style="margin-top:10px"><button class="btn" id="anahtarKaydet">Kaydet</button>' + (Y.anahtar ? '<button class="btn ikincil" id="anahtarSil">Anahtarı sil</button>' : '') + '</div><div class="durum" id="adurum">' + (Y.model ? 'Model: ' + esc(Y.model) : '') + '</div></div>' +
+    '<div class="kart" style="max-width:640px"><div class="kt">Oturum</div><button class="btn ikincil" id="cikis">Bu bilgisayarda çıkış yap</button></div>';
+  $('#anahtarKaydet').onclick = function () {
+    Y.anahtar = $('#anahtar').value.trim(); kaydet(); $('#adurum').textContent = 'Deneniyor…';
+    fetch('https://api.anthropic.com/v1/models?limit=50', {headers: basliklar()}).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error((j.error && j.error.message) || r.status); return j.data || []; }); })
+      .then(function (l) { var s = l.filter(function (m) { return /sonnet/i.test(m.id); })[0] || l[0]; Y.model = s ? s.id : ''; kaydet(); $('#adurum').textContent = 'Anahtar çalışıyor. Model: ' + Y.model; taslaklariHazirla(); })
+      .catch(function (e) { $('#adurum').textContent = 'Anahtar çalışmadı: ' + e.message; });
+  };
+  if ($('#anahtarSil')) $('#anahtarSil').onclick = function () { Y.anahtar = ''; Y.model = ''; kaydet(); ayarCiz(); };
+  $('#cikis').onclick = function () { Y.sifre = ''; kaydet(); V = null; girisCiz(); };
+}
+
+$('#genelBtn').onclick = function () { gorunum = {ad: 'genel'}; ciz(); };
+$('#yenileBtn').onclick = function () { getir(false); };
+$('#ayarBtn').onclick = function () { gorunum = {ad: 'ayar'}; ciz(); };
+function ciz() { ({genel: genelCiz, inceleme: incelemeCiz, ayar: ayarCiz})[gorunum.ad](); window.scrollTo(0, 0); }
+if (Y.sifre) getir(false); else girisCiz();
+})();
+</script>
+</body>
+</html>
