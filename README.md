@@ -9,15 +9,12 @@ Anadolu Üniversitesi Yaşam Boyu Öğrenme ve Yetişkin Eğitimi yüksek lisans
 | `index.html` | Giriş |
 | `ders.html` | Platformun tamamı: dersler, beş adım, bölüm sınavı, karne. Tek dosya, bağımlılıksız |
 | `materyal.html` | İndirilebilir dosyaların dizini |
-| `dosyam.html` | Tasarım Dosyam: öğrencinin haftalık Uygulama Yaprağı, geri bildirimleri ve öğrenen kartı (numara + PIN ile giriş) |
-| `ogretmen.html` | Öğretim elemanı sayfası (şifreyle açılır; bağlantısı platformda yer almaz) |
 
 | Klasör | İçerik |
 |---|---|
 | `materyal/00_Genel/` | Ders tasarımı ve izlence |
-| `materyal/HaftaNN/` | Kitap bölümü, etkinlik yaprakları, sunum (PDF) |
-| `animasyon/` | Seslendirilmiş animasyonlu anlatımlar (İzle adımı) |
-| `akilli/akilli_ayar.js` | Tasarım Dosyası ayarları ve sunucu adresi |
+| `materyal/HaftaNN/` | Kitap bölümü, ders planı, konuşma metni, etkinlik yaprakları, sunum (PDF) |
+| `materyal/00_Video_Brief/` | Videoların çekim brief'i ve kaynak metni |
 | `pdf/` | Alt başlıkların ayrı PDF'leri (Oku adımındaki **PDF ↓** düğmesi) |
 | `videolar.js` | Videoların YouTube adresleri |
 
@@ -25,6 +22,6 @@ Video bağlamak için `videolar.js` içinde ilgili dersin karşısına adresi ya
 
 GitHub Pages: klasörün içeriğini bir deponun köküne gönderin; Settings → Pages → Deploy from a branch (`main`, `/ (root)`). `.nojekyll` dosyasını silmeyin.
 
-Gizlilik: ders platformu kayıt istemez, çerez kullanmaz; ilerleme yalnızca ziyaretçinin tarayıcısında saklanır. Tasarım Dosyam sayfasında gönderilen yapraklar ve geri bildirimler, ders yürütücüsünün Google hesabındaki bir e-tabloda tutulur.
+Gizlilik: platform kayıt istemez, çerez kullanmaz; ilerleme yalnızca ziyaretçinin tarayıcısında saklanır.
 
 Lisans: CC BY-NC-SA 4.0 · © 2026 Prof. Dr. Hıdır Karaduman, Anadolu Üniversitesi.

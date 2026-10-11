@@ -69,6 +69,7 @@ table{width:100%;border-collapse:collapse}
 (function () {
 'use strict';
 var A = window.XX10_AKILLI, KEY = 'xx10_ogretmen_v1';
+var HS = (function () { try { var h = +JSON.parse(localStorage.getItem('xx10_thafta')); if (A.haftalar[h]) return h; } catch (e) {} return A.aktifHafta; })();
 var Y = yukle(), V = null, gorunum = {ad: 'genel'}, kuyruk = false;
 function yukle() { var d = {sifre: '', anahtar: '', model: '', taslak: {}}; try { var x = JSON.parse(localStorage.getItem(KEY)); if (x) return Object.assign(d, x); } catch (e) {} return d; }
 function kaydet() { try { localStorage.setItem(KEY, JSON.stringify(Y)); } catch (e) {} }
@@ -119,10 +120,11 @@ function taslaklariHazirla() {
 }
 
 /* ---------- sınıf ---------- */
+document.addEventListener('change', function (e) { if (e.target.id === 'hsec') { try { localStorage.setItem('xx10_thafta', JSON.stringify(+e.target.value)); } catch (x) {} HS = +e.target.value; ciz(); } });
 function genelCiz() {
-  var h = 1, H = A.haftalar[h], ogr = V.ogrenciler.slice().sort(function (a, b) { return a.ad.localeCompare(b.ad, 'tr'); });
+  var h = HS, H = A.haftalar[h], ogr = V.ogrenciler.slice().sort(function (a, b) { return a.ad.localeCompare(b.ad, 'tr'); });
   var bekleyen = ogr.filter(function (o) { return bekliyor(o.no, h); }).length;
-  $('#ana').innerHTML = '<div class="kart"><div class="kt">Hafta 1 · ' + esc(H.uy) + ' · ' + esc(H.baslik) + '</div>' +
+  $('#ana').innerHTML = '<div class="kart"><div class="kt">Hafta <select id="hsec" style="font:inherit">' + Object.keys(A.haftalar).map(function (k) { return '<option value="' + k + '"' + (+k === HS ? ' selected' : '') + '>' + k + '</option>'; }).join('') + '</select> · ' + esc(H.uy) + ' · ' + esc(H.baslik) + '</div>' +
     (ogr.length ? '<p class="kucuk mute">' + (bekleyen ? bekleyen + ' yaprak geri bildiriminizi bekliyor. Satıra tıklayın.' : 'Bekleyen yaprak yok.') + (Y.anahtar ? '' : ' Taslakların kendiliğinden hazırlanması için Ayarlar\'dan Claude anahtarını girin.') + '</p>' +
       '<table class="genel"><tr><th>Öğrenci</th><th>Durum</th>' + A.boyutlar.map(function (b) { return '<th title="' + esc(b.ad) + '">' + b.id + '</th>'; }).join('') + '</tr>' +
       ogr.map(function (o) {
@@ -136,7 +138,7 @@ function genelCiz() {
           A.boyutlar.map(function (b) { return '<td><span class="hucre ' + (s[b.id] != null ? 'd' + s[b.id] : '') + '"></span></td>'; }).join('') + '</tr>';
       }).join('') + '</table><p class="kucuk mute" style="margin-top:10px">Hücreler son onayladığınız düzeyi gösterir: <span class="hucre d0"></span> henüz · <span class="hucre d1"></span> gelişiyor · <span class="hucre d2"></span> yerinde</p>'
       : '<p>Henüz giriş yapan öğrenci yok. Öğrenciler platformdaki "Tasarım Dosyam" düğmesinden numaraları ve kendi belirledikleri PIN ile girer.</p>') + '</div>';
-  document.querySelectorAll('tr.tik').forEach(function (tr) { tr.onclick = function () { gorunum = {ad: 'inceleme', no: tr.dataset.no, h: 1}; ciz(); }; });
+  document.querySelectorAll('tr.tik').forEach(function (tr) { tr.onclick = function () { gorunum = {ad: 'inceleme', no: tr.dataset.no, h: HS}; ciz(); }; });
 }
 
 /* ---------- inceleme ---------- */

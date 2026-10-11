@@ -72,13 +72,14 @@ details{margin-top:6px}summary{cursor:pointer;color:var(--navy);font-size:14px}
 <script>
 (function () {
 'use strict';
-var A = window.XX10_AKILLI, HAFTA = 1, OTURUM = 'xx10_oturum_v1';
+var A = window.XX10_AKILLI, HAFTA = (function () { var m = /[?&]h=(\d+)/.exec(location.search), h = m ? +m[1] : (+oku('xx10_hafta') || A.aktifHafta); return A.haftalar[h] ? h : A.aktifHafta; })(), OTURUM = 'xx10_oturum_v1';
 var O = null, D = {teslimler: [], gb: []}, gorunum = 'yaprak', mesaj = '';
 function $(q) { return document.querySelector(q); }
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]; }); }
 function tarih(t) { var d = new Date(t); return d.toLocaleDateString('tr-TR', {day: 'numeric', month: 'long'}) + ' ' + d.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'}); }
 function oku(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
 function yaz(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+document.addEventListener('change', function (e) { if (e.target.id === 'hsec') { try { localStorage.setItem('xx10_hafta', JSON.stringify(+e.target.value)); } catch (x) {} location.reload(); } });
 function H() { return A.haftalar[HAFTA]; }
 function taslakKey() { return 'xx10_taslak_' + O.no + '_' + HAFTA; }
 function taslak() { return oku(taslakKey()) || {alanlar: {}, kontrol: [], oz: {}, kartNotu: ''}; }
@@ -143,7 +144,7 @@ function yaprakCiz() {
       A.duzeyler.map(function (d) { return '<button type="button" data-d="' + d.k + '" class="' + (u.oz[b.id] === d.k ? 'sec' : '') + '">' + esc(d.ad) + '</button>'; }).join('') + '</div></div>';
   }).join('');
   $('#ana').innerHTML = durum +
-    '<div class="kart"><div class="kt">Hafta ' + HAFTA + ' · ' + esc(h.uy) + '</div><h2>' + esc(h.baslik) + '</h2><p class="mute">' + esc(h.yonerge) + '</p>' +
+    '<div class="kart"><div class="kt">Hafta <select id="hsec" style="font:inherit">' + Object.keys(A.haftalar).map(function (k) { return '<option value="' + k + '"' + (+k === HAFTA ? ' selected' : '') + '>' + k + '</option>'; }).join('') + '</select> · ' + esc(h.uy) + '</div><h2>' + esc(h.baslik) + '</h2><p class="mute">' + esc(h.yonerge) + '</p>' +
     '<div class="sayac" id="sayac"></div>' + alanlar + '</div>' +
     '<div class="kart kontrol"><div class="kt">Kendini denetle</div>' + kontrol + '</div>' +
     '<div class="kart"><div class="kt">Kendimi nerede görüyorum?</div><p class="mute kucuk">Her boyut için kendinizi değerlendirin. Bu bir not değildir; geri bildirimle yan yana konarak kartınızı oluşturur.</p>' + oz +

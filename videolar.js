@@ -5,5 +5,13 @@ window.SBAY_VIDEO = {
   dersler: {
     "D01": "https://youtu.be/so2FAwsWH5o",
     "D02": "",
+    "D03": "https://youtu.be/Yk6qa6eauT4",
+    "D04": "https://youtu.be/CZzvp0_U_iw",
+    "D05": "",
+    "D06": "",
+    "D07": "",
+    "D08": "",
+    "D09": "",
+    "D10": "",
   }
 };
